@@ -1,0 +1,19 @@
+# home
+home: home
+blog: blog
+resume: résumé
+short_version: short version
+long_version: long version
+latest_posts: Latest blog posts
+
+# post
+toc_title: On this page
+
+# resume
+experience: experience
+skills: skills
+languages: languages
+technologies: technologies/methods
+soft_skills: soft skills
+education: education
+interests: interests

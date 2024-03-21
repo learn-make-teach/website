@@ -1,0 +1,100 @@
+title: Développeur sénior Java/Go, architecte solutions
+intro: "Architecte et avant tout développeur, j'aime le challenge, apprendre de nouvelles choses et transmettre mes connaissances. J'aborde les projets dans leur ensemble, de l'analyse du besoin à l'exploitation en production. Travailler dans une startup m'a appris à être efficace et agile, chez Worldline j'ai appris à prendre en compte les contraintes d'échelle d'un grand groupe. Je travaille en distanciel avec des équipes distribuées depuis 4 ans."
+experience:
+  - title: architecte solutions
+    dates: Septembre 2015-Février 2024
+    company: Ingenico / Worldline
+    desc:
+      - "Je rejoins Ingenico en tant qu'architecte solution. Je participe principalement à la définition des architectures des nouvelles fonctionnalités de nos applications de paiement en France puis on me confie 3 services partagés (équipes en Belgique, Suède et Inde). Mon rôle comprend entre autre des réponses à appel d'offres, l'architecture logicielle d'évolutions et de nouveaux composants (architecture microservices, API Rest/GRPC, communication par messages, event sourcing...), le développement de prototypes et de certaines briques logicielles communes voire des logiciels complets (Java/Spring, C++, Go), le développement des scripts de déploiement (Puppet), la mise en place de tableaux de bord (Prometheus/Grafana, ELK), certaines opérations de production (migrations, analyse de performance, postmortem)."
+      - "Les composants sur lesquels j'interviens ont des contraintes de haute disponibilité, de sécurité et de scalabilité. Je suis également en charge des audits de sécurité PCIDSS et PCIPIN de mes applications. J'assure enfin la montée en compétence de différentes équipes de développement (documentation, présentations, formations, revues de code)"
+    techs:
+      - Java
+      - Go
+      - Spring
+      - Postgresql
+      - RabbitMQ
+      - Kafka
+      - HSM
+      - Puppet
+      - Scrum
+      - DevSecOps
+      - Docker
+      - Linux
+  - title: développeur sénior / manager / architecte
+    dates: Août 2007- Août 2015
+    company: Oodrive
+    desc: 
+      - "D'abord chef de projet junior puis chef d'équipe, j'interviens sur des applications client/serveur multiplateformes pour du partage et de la sauvegarde de fichiers en ligne. Je développe principalement en Java coté client d'abord (Swing) puis serveur (Spring, Postgresql). Je me forme au C# afin de remplacer une application en C++, et j'accompagne les équipes dans leur transition agile."
+      - "Mon rôle évolue ensuite vers de l'architecture, je travaille sur des problématiques de scabilité et disponibilité de nos applications, sur des sujets tels que la réplication et répartition de charge de la base de données Postgresql ou l'utilisation de RabbitMQ pour distribuer les tâches de traitement d'images en dehors du serveur principal."
+    techs:
+      - Java
+      - C++
+      - C#
+      - Swing
+      - GWT
+      - Spring
+      - Hibernate
+      - Postgresql
+      - RabbitMQ
+      - Scrum
+  - title: développeur Java
+    dates: Septembre 2001-Août 2007
+    company: SII
+    desc: 
+      - "Ma mission principale se passe chez l'équipementier MBDA. En tant que développeur junior, j'interviens sur des IHM pour de la préparation de mission pour avions de chasse et missiles au sein d'une équipe de 6 personnes. Le développement se fait en Java/Swing, avec communication avec les serveurs de calcul via CORBA."
+      - "Je travaille également sur des missions plus courtes en Java/JSF, ce qui me permet d'avoir une première expérience en développement serveur."
+      - "Fort de mon expérience acquise en Java, j'organise et je dispense des formations internes pour d'autres développeurs."
+    techs:
+      - Java
+      - Swing
+      - JSF
+      - Spring
+      - Hibernate
+      - MySQL
+      - Cycle en V
+skills:
+  languages:
+    - level: langue maternelle
+      name: Français
+    - level: courant
+      name: Anglais
+  techs:
+    - level: Expert
+      list:
+        - Java
+    - level: Avancé
+      list:
+        - Go
+        - Spring
+        - Postgresql
+        - RabbitMQ
+        - HSMs
+    - level: Intermédiaire
+      list:
+        - Git
+        - Docker
+        - Puppet
+        - Kafka
+    - level: Notions
+      list:
+        - Kubernetes
+        - Terraform
+        - Cassandra
+  soft:
+    - Résolution de problèmes
+    - Adaptabilité
+    - Collaboration
+    - Leadership
+education:
+  - title: Ingénieur en Génie Informatique - Spécialisation en Génie Logiciel
+    date: 2001
+    school: Université de Technologie de Compiègne
+  - title: Baccalauréat S - Spécialité Maths & Sciences et techniques de l'ingénieur
+    date: 1996
+    school: Lycée François Bazin - Charleville Mézières
+interests:
+  - "Ebenisterie, musculation, jeux vidéos"
+
+
+
+

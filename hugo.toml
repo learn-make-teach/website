@@ -1,0 +1,19 @@
+baseURL = 'https://learn-make-teach.org/'
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = 'true'
+title = 'Learn/Make/Teach'
+[markup.goldmark.parser.attribute]
+block = true
+[languages]
+  [languages.en]
+    languageName = 'English'
+    languageCode = 'en'
+    weight = 1
+    [languages.en.params]
+        languageFlag = 'us'
+  [languages.fr]
+    languageName = 'Français'
+    languageCode = 'fr-FR'
+    weight = 2
+    [languages.fr.params]
+        languageFlag = 'fr'

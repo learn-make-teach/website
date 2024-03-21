@@ -1,0 +1,19 @@
+# home
+home: accueil
+blog: blog
+resume: CV
+short_version: version courte
+long_version: version longue
+latest_posts: Derniers articles ajoutés
+
+# post
+toc_title: Au sommaire
+
+# resume
+experience: expérience
+skills: compétences
+languages: langues
+technologies: technologies et méthodes
+soft_skills: soft skills
+education: formation
+interests: centres d'intérêt

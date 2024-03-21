@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+}
+
+.nav-link {
+    text-transform: capitalize
+}
+
+.resume {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+.resume h1::first-letter {
+    text-transform: capitalize
+}
+.resume h2::first-letter {
+    text-transform: capitalize
+}
+.resume h3::first-letter {
+    text-transform: capitalize
+}
+.resume h4::first-letter {
+    text-transform: capitalize
+}
+.resume h5::first-letter {
+    text-transform: capitalize
+}
+.resume h6::first-letter {
+    text-transform: capitalize
+}
+.resume-inner {
+    max-width: 1000px;
+    padding-bottom: 30px;
+}
+
+.resume-header {
+    background: var(--bs-gray-dark);
+    color: var(--bs-white);
+    height: 220px;
+  }
+  
+  .resume-header .picture {
+    width: 220px;
+  }
+  
+  .resume-header .name {
+    font-size: 2.25rem;
+    letter-spacing: 0.175rem;
+    font-weight: 900;
+  }
+  
+  .resume-header .title {
+    font-size: 1.5rem;
+  }
+
+  
+.resume-header a {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))
+  }
+
+@media (max-width: 800px) {
+    .resume {
+        padding-top: 0;
+    }
+    .resume-wrapper {
+        padding-top: 0;
+    }
+    .resume-header {
+        height: auto;
+    }
+    .resume-header .picture {
+        width: 200px;
+        border-radius: 0px;
+    }
+}
+
+
+.resume-section h2 {
+font-size: 1.75rem;
+position: relative;
+--bs-text-opacity: 1;
+color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity));
+}
+
+.resume-section h2:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1.5px;
+    --bs-text-opacity: 1;
+    background: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity));
+  }
+
+  .resume-company {
+    font-size: 1.2rem;
+  }
+.resume-experience-desc p, #intro p {
+    text-align: justify;
+}
+
+/* blog posts */
+
+  /* .main-layout {
+    display: grid;
+    grid-template-areas: "title toc" "content toc";
+    grid-template-rows: "1fr" auto;
+    grid-template-columns: 4fr 1fr;
+  }
+  .my-content {
+    grid-area: content;
+    min-width: 1px;
+    text-align: justify;
+  }
+  .toc {
+      grid-area: toc;
+      font-size: .875rem;
+      background-color: rgb(var(--bs-tertiary-bg-rgb));;
+  } */
+  .toc ul {
+    list-style: none;
+  }
+  .toc ul ul {
+    font-weight: 100;
+  }
+  .toc a {
+    color:inherit;
+    text-decoration: none;
+  }
+  .toc a img {
+    display: none;
+  }
+
+  .blog h2>img {
+    float:right;
+    padding-left:10px;
+  }
+
+  /* homepage */
+
+  .posts a {
+    text-decoration: none;
+  }
+
+  .card {
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+  }
+
+  .card:hover {
+    -webkit-box-shadow: 0 20px 40px rgba(0,0,0,.4);
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+  }
+
+/* CSS specific rules to print the resume ( remove header/footer, tweak sizing, fonts, ...) */
+  @media print {
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust:exact !important;
+      }
+    .resume {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .resume p, .resume li {
+      font-size: 0.9rem;
+    }
+    .resume .badge {
+      font-size: 0.9em;
+    }
+    .resume-inner {
+      padding-bottom: 0;
+    }
+    .resume-wrapper {
+        padding-top: 0;
+    }
+    .resume-header {
+        width: auto;
+        height: 185px;
+    }
+    .resume-header .picture {
+        width: 180px;
+    }
+    .resume-header .name {
+    font-size: 2rem;
+    letter-spacing: 0.175rem;
+    font-weight: 900;
+  }
+  
+  .resume-header .title {
+    font-size: 1rem;
+  } 
+  .resume-body {
+    padding: 1em 0 0 0!important
+  }
+  .text-md-start {
+    text-align: left!important;
+    }
+    .col-md-auto {
+        flex: 0 0 auto;
+        width: auto;
+    }
+    .flex-md-row {
+        flex-direction: row!important;
+    }
+    .shadow-lg {
+        box-shadow: none !important;
+      }
+      .shadow-sm {
+        box-shadow: none !important;
+      }
+      
+  *,
+  *::before,
+  *::after {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  a:not(.btn) {
+    text-decoration: underline;
+  }
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #adb5bd;
+    page-break-inside: avoid;
+  }
+  tr,
+  img, section {
+    /* page-break-inside: avoid; */
+  }
+  p,
+  h2,
+  h3, section {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    /* page-break-after: avoid; */
+  }
+  @page {
+    size: a4;
+  }
+}

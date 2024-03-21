@@ -1,0 +1,108 @@
+{{ define "main" }}
+    {{ with index .Site.Data .Site.Language.Lang }}
+    {{ with index . (printf "resume-%s" $.Params.format) }}
+    <article class="resume position-relative">
+        <div class="resume-inner mx-auto shadow-lg">
+        
+        <header class="resume-header">
+            <div class="row">
+                <div class="col-block col-md-auto text-center text-md-start">
+                    <img class="picture" src="/img/1517693708952.jpg" alt="">
+                </div>
+                <div class="col">
+                    <div class="row p-2 justify-content-center justify-content-md-between">
+                        <div class="primary-info col-auto">
+                            <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">Christophe Delhorbe</h1>
+                            <div class="title mb-3">{{ .title }}</div>
+                            <ul class="social-icons list-unstyled">
+                                <li class="mb-2"><a class="text-link" href="mailto:cdelhorbe.rec@gmail.com"><i class="bi bi-envelope me-2" data-fa-transform="grow-3"></i>cdelhorbe.rec@gmail.com</a></li>
+                                <li class="mb-2"><a class="text-link social-icon" href="https://linkedin.com/in/christophe-delhorbe-954555a"><span class="fa-container text-center me-2"><i class="bi bi-linkedin"></i></span>https://linkedin.com/in/christophe-delhorbe-954555a</a></li>
+                                <li class="mb-2"><a class="text-link" href="https://github.com/learn-make-teach"><span class="fa-container text-center me-2"><i class="bi bi-github"></i></span>https://github.com/learn-make-teach</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </header>
+        
+        <div class="container-fluid pt-4 pb-0 mb-0 resume-body">
+            <div id="intro" class="resume-section mb-3">
+                <p>{{.intro}}</p>
+            </div>
+            <div id="experience" class="resume-section mb-4">
+                <h2>{{T "experience"}}</h2>
+                {{ range .experience }}
+                <section class="mb-5">
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-0">
+                    <div class="flex-grow-1">
+                        <h5 class="resume-jobtitle mb-0">{{ .title }}</h5>
+                        <div class="resume-dates subheading mb-2 text-secondary">{{ .dates }}</div>
+                    </div>
+                    <div class="flex-shrink-0"><span class="resume-company text-secondary">{{ .company }}</span></div>
+                </div>
+                <div>
+                    <div class="resume-experience-desc">
+                        {{ range .desc }}
+                        <p>{{ . }}</p>
+                        {{ end }}
+                    </div>
+                    <h6>{{T "technologies"}}</h6>
+                    <ul class="list-inline">
+                        {{ range .techs }}
+                        <li class="list-inline-item"><span class="badge bg-secondary badge-pill">{{ . }}</span></li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </section>
+            {{ end }}
+
+            </div>
+            <section id="skills" class="resume-section mb-4">
+                <h2>{{T "skills"}}</h2>
+                    <h5>{{T "languages"}}</h5>
+                    <ul class="list-unstyled">
+                        {{ range .skills.languages }}
+                            <li>{{ .name}}: {{ .level }}</li>
+                        {{ end }}
+                    </ul>
+                    <h5>{{T "technologies"}}</h5>
+                    <ul class="list-unstyled">
+                        {{ range .skills.techs }}
+                        <li>{{ .level }}: {{ range .list }}<span class="badge bg-secondary badge-pill">{{ . }}</span> {{end}}</li>
+                        {{ end }}
+                    </ul>
+                    <h5>{{T "soft_skills"}}</h5>
+                    <ul class="list-inline">
+                        {{ range .skills.soft }}
+                        <li class="list-inline-item"><span class="badge bg-secondary badge-pill">{{ . }}</span></li>
+                        {{ end }}
+                    </ul>
+            </section>
+        
+            <section id="education" class="resume-section mb-4">
+                <h2>{{T "education"}}</h2>
+                {{ range .education }}
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+                    <div class="flex-grow-1">
+                        <h5 class="mb-0">{{ .title }}</h5>
+                        <div class="subheading mb-3 text-secondary">{{ .school }}</div>
+                    </div>
+                    <div class="flex-shrink-0"><span class="text-secondary">{{ .date }}</span></div>
+                </div>
+                {{ end }}
+            </section>
+            <section id="interests" class="resume-section mb-0">
+                <h2>{{T "interests"}}</h2>
+                <ul class="list-unstyled">
+                    {{ range .interests }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </section>
+        </div>
+        </div>
+        </article>
+    {{ end }}
+{{ end }}
+{{ end }}

@@ -1,0 +1,25 @@
+{{- define "main" -}}
+  <div class="homepage container-xxl mx-auto p-0 ps-5">
+    <h1 class="display-1">{{ .Title }}</h1>
+    <p class="lead">{{ .Summary }}</p>
+    {{- .Content -}}
+    <div class="posts">
+      <h1 class="pb-2">{{T "latest_posts"}}</h1>
+      <div class="row">
+        {{ with (index (where site.RegularPages "Type" "blog").ByDate.Reverse 0) }}
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-4">
+          <a href="{{ .RelPermalink }}">
+            <div class="card">
+              <img src="/img/{{ .Params.image}}" class="card-img-top">
+              <div class="card-body">
+                <p class="card-title fw-bold">{{ .Title }}</p>
+                <p class="card-text">{{ .Summary }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ .Date.Format (.Site.Params.dateFormat | default "2006-01-02" )  }}</small></div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+{{- end -}}

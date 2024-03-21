@@ -1,0 +1,98 @@
+title: Senior Java/Go developper, Solution architect
+intro: "Architect but first and foremost developer, I enjoy a new challenge, learn new things and share my knowledge. I take projects from the requirements analysis all the way to production. Working in a startup taught me to be efficient and agile, while in a big company I learned to work with all sorts of technical and non technical constraints. I've been working in full remote with distributed team for the last 4 years."
+experience:
+  - title: Solution Architect
+    dates: September 2015-February 2024
+    company: Ingenico / Worldline
+    desc:
+      - "I join Ingenico as a Solution Architect. I mainly define the architecture of new features for our payment applications, then I'm entrusted 3 shared services (teams in Belgium, Sweden and India). Among other things I work on Requests for Proposal, software architecture for evolutions or new applications (microservices, Rest/GRPC APIs, message bus, event sourcing, ...), development of prototype, common libraries or even complete components (Java/Spring, C++, Go), development of deployment scripts (Puppet), dashboards (Prometheus/Grafana, ELK) and some operations in production (migration, performance analysis, postmortem)."
+      - "The components I work on all have high availability, scalability and security constraints. I'm also in charge of the PCIDSS and PCIPIN security audits for my apps. I make sure of sharing my knowledge with the development teams around me (documentation, presentation, training, code review)."
+    techs:
+      - Java
+      - Go
+      - Spring
+      - Postgresql
+      - RabbitMQ
+      - Kafka
+      - HSM
+      - Puppet
+      - Scrum
+      - DevSecOps
+  - title: Senior Dev / Manager / Architect
+    dates: August 2007-August 2015
+    company: Oodrive
+    desc: 
+      - "Junior project manager at first, then team manager, I work on cross-platform client/server applications related to file sharing and online backup. I code mainly in Java on the client app first (Swing), then on the server (Spring, Postgresql). I learn C# to rewrite a C++ app and I push the teams towards an agile transformation."
+      - "My role then evolves into architect, I work on the scalability and the availability of our applications, on subjects as database replication (Postgresql), load balancing, or using RabbitMQ to distribute image processing tasks on workers."
+    techs:
+      - Java
+      - C++
+      - C#
+      - Swing
+      - GWT
+      - Spring
+      - Hibernate
+      - Postgresql
+      - RabbitMQ
+      - Scrum
+  - title: Java developer
+    dates: September 2001-August 2007
+    company: SII
+    desc: 
+      - "My main mission as a contractor is for MBDA. As a junior developer, I work on GUIs for aircraft and missile mission preparation in a team of 6 people. It's a Java/Swing software which communicates with computation servers using CORBA."
+      - "I also work on smaller mission in Java/JSF as my first experience in backend development."
+      - "As I gain experience in Java, I also provide training for other developers."
+    techs:
+      - Java
+      - Swing
+      - JSF
+      - Spring
+      - Hibernate
+      - MySQL
+      - Waterfall
+skills:
+  languages:
+    - level: native
+      name: French
+    - level: fluent
+      name: English
+  techs:
+    - level: Expert
+      list:
+        - Java
+    - level: Advanced
+      list:
+        - Go
+        - Spring
+        - Postgresql
+        - RabbitMQ
+        - HSMs
+    - level: Intermediate
+      list:
+        - Git
+        - Docker
+        - Puppet
+        - Kafka
+    - level: Novice
+      list:
+        - Kubernetes
+        - Terraform
+        - Cassandra
+  soft:
+    - Problem solving
+    - Adaptability
+    - Collaboration
+    - Leadership
+education:
+  - title: Master's degree in Engineering - Specialized in software development
+    date: 2001
+    school: Université de Technologie de Compiègne
+  - title: Bachelor in Science - Math and Engineering technics
+    date: 1996
+    school: High school François Bazin
+interests:
+  - "Woodworking, Weightlifting, videogames"
+
+
+
+

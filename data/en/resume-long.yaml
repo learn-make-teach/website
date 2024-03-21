@@ -1,0 +1,102 @@
+title: Senior Java/Go developper, Solution architect
+intro: "Architect but first and foremost developer, I enjoy a new challenge, learn new things and share my knowledge. I take projects from the requirements analysis all the way to production. Working in a startup taught me to be efficient and agile, while in a big company I learned to work with all sorts of technical and non technical constraints. I've been working in full remote with distributed team for the last 4 years."
+experience:
+  - title: Solution Architect
+    dates: September 2015-February 2024
+    company: Ingenico / Worldline
+    desc:
+      - "I join Ingenico as a Solution Architect. I mainly define the architecture of new features in the Card Present payment applications (C++/Postgresql). I introduce a new service oriented model for some of those new feature to isolate them from the core payment apps. I help the teams embrace the Go language for these services. In parallel, I also train multiple teams on Git for the migration from SVN. The last application I design uses Kafka as a source of truth to remove the need of IPC message queues and reduce the dependency on a central database. This application will be written in Go and will be composed of multiple independent services."
+      - "After a year, I'm put in charge of the team developing the tokenisation service. It's a shared service written in Java/Spring exposing a Rest API and storing its data in a Postgresql database. Its role is to replace a sensitive credit card number (PAN) with a non-sensitive token. I participate in its integration by multiple internal business units of Ingenico and then Wordline. I also work with multiple big retail customers to define and operate the migration of their data to this service with minimum impact on their business. When I leave the company, more than 2 billion tokens are stored and it serve around 10 million requests every day with an average response time of 15ms."
+      - "After the merge with Worldline, I focus on the HSM usage in my business unit. I design and develop a loadbalancer to improve the availability and usage of our HSMs (specific protocol over TCP). This application has to be light and fast as an HSM response is usually within 3ms. I develop this application in Go and bring it to production in our local cloud. Every HSM call will go through this application (100 million per day). I then start working on higher level services with HTTP APIs (encryption, mac, pin...). I'm working with a team of 6 people in Sweden."
+      - "I'm also in charge of the scheme tokenisation service, a API translation layer in front of Visa, Mastercard and CB's own tokenisation services. This service is written in Java/Spring and the development team is based in India."
+      - "All our services are developped using the scrum method and deployed in our local cloud using Puppet. I work from dev to production in a devsecops way, using Gitlab to orchestrate the deployment lifecycle. I also manage the security reviews and certifications for my services (PCI DSS/PCI PIN)."
+    techs:
+      - Java
+      - Go
+      - Spring
+      - Postgresql
+      - RabbitMQ
+      - Kafka
+      - HSM
+      - Puppet
+      - Scrum
+      - DevSecOps
+  - title: Senior Dev / Architect
+    dates: August 2007-August 2015
+    company: Oodrive
+    desc: 
+      - "Oodrive is a software editor specialized in sharing and saving files securely. I join as a senior dev/junior project manager on a backup software for Orange. The software has a Java/Swing frontend for configuration, a Windows service written in C++ for the actual backup and sends files to an Orange storage server using HTTP."
+      - "I then manage teams in charge of the backup software for pros (C++ -> C#, Java/Spring server, GWT web client), and our new file sharing solutions ala Dropbox : Java/Spring server, clients for Windows (C#), Android (Java), iOS (Objective C), Web (Angular)."
+      - "My role evolves into architect as I work on the scalability and reliability of our applications: database replication & load balancing, offloading of the image processing outside the main server with work distribution using RabbitMQ"
+    techs:
+      - Java
+      - C++
+      - C#
+      - Swing
+      - GWT
+      - Spring
+      - Hibernate
+      - Postgresql
+      - RabbitMQ
+      - Scrum
+  - title: Java developer
+    dates: September 2001-August 2007
+    company: SII
+    desc: 
+      - "My main mission as a contractor is for MBDA. As a junior developer, I work on GUIs for aircraft and missile mission preparation in a team of 6 people. It's a Java/Swing software which communicates with computation servers using CORBA."
+      - "I also work on smaller mission in Java/JSF as my first experience in backend development."
+      - "As I gain experience in Java, I also provide training for other developers."
+    techs:
+      - Java
+      - Swing
+      - JSF
+      - Spring
+      - Hibernate
+      - MySQL
+      - Waterfall
+skills:
+  languages:
+    - level: native
+      name: French
+    - level: fluent
+      name: English
+  techs:
+    - level: Expert
+      list:
+        - Java
+    - level: Advanced
+      list:
+        - Go
+        - Spring
+        - Postgresql
+        - RabbitMQ
+        - HSMs
+    - level: Intermediate
+      list:
+        - Git
+        - Docker
+        - Puppet
+        - Kafka
+    - level: Novice
+      list:
+        - Kubernetes
+        - Terraform
+        - Cassandra
+  soft:
+    - Problem solving
+    - Adaptability
+    - Collaboration
+    - Leadership
+education:
+  - title: Master's degree in Engineering - Specialized in software development
+    date: 2001
+    school: Université de Technologie de Compiègne
+  - title: Bachelor in Science - Math and Engineering technics
+    date: 1996
+    school: High school François Bazin
+interests:
+  - "Woodworking, Weightlifting, videogames"
+
+
+
+

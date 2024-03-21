@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="blog container-xxl main-layout mx-auto p-0">
+    <div class="title ps-5 pt-3 container-xxl bg-body-tertiary">
+        <div class="row flex-lg-row align-items-center">
+            <div class="col-6 col-sm-8 col-lg-4 ps-4">
+                <img src="/img/{{ $.Page.Params.image}}" width="200"/>
+            </div>
+            <div class="col-lg-8">
+            <h1>{{ .Title }}</h1>
+            <p>{{ $.Page.Summary }}</p>
+        </div>
+        </div>
+    </div>
+    <aside class="toc p-3 ps-5 ">
+        <h2>{{T "toc_title"}}</h2>
+        {{ .TableOfContents }}
+    </aside>
+    <main class="my-content p-3 ps-5 ">
+        {{ .Content }}
+    </main>
+
+</div>
+{{ end }}
