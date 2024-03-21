@@ -63,7 +63,7 @@ jobs:
           name: public
           path: ./public
       - name: Deploy to Hostinger
-        uses: easingthemes/ssh-deploy@v5
+        uses: easingthemes/ssh-deploy@v5.0.3
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-avz -i --delete"
