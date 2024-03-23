@@ -190,7 +190,7 @@ Nous recevons une erreur plsu générique:
 curl: (35) error:0A000410:SSL routines::sslv3 alert handshake failure
 ```
 Si le client et le serveur ont une version et cipher en commun, le serveur envoie à son tour son Hello.
-## Server Hello, certificates, acceptable CAs
+## Server Hello, certificats, acceptable CAs
 Le serveur envoie la version TLS et le cipher sélectionnés, suivi de:
 - sa chaine de certificat
 - dans le cas de mTLS une demande de certificat client accompagnée de la liste des CA autorisées
