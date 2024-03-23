@@ -7,12 +7,12 @@ draft = false
   image = 'spy-vs-spy.webp'
 +++
 ## Overview
-TLS (for Transport Layer Security) is the successor of the now insecure SSL protocol. It sits on top of TCP to provide secrecy (encryption) and prevent tampering (signature) of identities and data. It uses asymmetric ciphering based on key/certificate pairs to exchange symmetric session keys, no manual exchange of initial secrets is required.
+TLS (for Transport Layer Security) is the successor of the now insecure SSL protocol. It sits on top of TCP (usually) to provide secrecy (encryption) and prevent tampering (signature) of identities and data. It uses asymmetric ciphering based on key/certificate pairs to exchange symmetric session keys, no manual exchange of initial secrets is required.
 
 In its mutual form (mTLS), it also provides client authentication using a client key/certificate pair.
 
 ## Lab
-To illustrate how TLS works and where it can fail, we will setup a server and a client using openssl. It's the only tool you need to manipulate certificates, debug a connection, and much more. It should already be available on any linux distribution, and there are some ports for other OSes too (but for Windows, I'd recommend using WSL to use the linux implementation)
+To illustrate how TLS works and where it can fail, we will setup a server and a client using openssl. It's the only tool you need to manipulate certificates, debug a connection, and much more. It should already be available on any linux distribution, and there are some ports for other OSes too (but for Windows, I'd recommend using WSL to use the linux implementation).
 
 ### Certificates and trust
 TLS is based on asymmetric ciphering, which means that it uses a private key (usually called the key) and a public key (the certificate). The public key can encrypt data and verify signatures, the private key is required to decrypt and generate a signature. This means that the client can encrypt, the server will decrypt, sign, and the client will verify the signature.
@@ -100,7 +100,7 @@ Note that some platforms (eg. Java's JRE) use a specific default trust store (/e
 
 ### Test platform
 
-We are going to need a server certificate. To be realistic, we will create a chain of 3 certificates, 2 CAs and a server. We could use a public CA (like Let's Encrypt who deliver free certificates), but we would be challenged to prove that we own the domain name we want a certificate for, usually by hosting a file at a specific path on a public facing address. For simplicity sake, we will generate our own CA. The only different is that our CA will not be in the system trust store so we will have to trust it explicitely by adding it to the user trust store or directly in the client. 
+We are going to need a server certificate. To be realistic, we will create a chain of 3 certificates, 2 CAs and a server. We could use a public CA (like Let's Encrypt who deliver free certificates), but we would be challenged to prove that we own the domain name we want a certificate for, usually by hosting a file at a specific path on a public facing address. For simplicity sake, we will generate our own CA. The only difference is that our CA will not be in the system trust store so we will have to trust it explicitely by adding it to the user trust store or directly in the client. 
 
 First we create the root CA private key first. We will generate an RSA key of length 4096 bits. It will be stored in the rootCA.key file in PEM format (ascii)
 ```
@@ -142,7 +142,7 @@ openssl genrsa -out client.key 4096
 openssl req -new -key client.key -out client.csr -subj '/CN=client' -addext 'extendedKeyUsage = clientAuth'
 openssl x509 -req -in client.csr -CA clientCA.crt -CAkey clientCA.key -CAcreateserial -out client.crt  -copy_extensions=copyall
 ```
-All set! we can now start a server and test a connection. We will use openssl s_server for the server, and curl to test the connection.
+All set! We can now start a server and test a connection. We will use `openssl s_server` for the server, and curl to test the connection.
 ```
 openssl s_server -key server.key -cert server.crt -accept 8443 -www -cert_chain chain.crt -build_chain -CAfile clientCA.crt -Verify 10 -verify_return_error -tls1_3 -strict -ciphersuites TLS_CHACHA20_POLY1305_S
 HA256
@@ -167,7 +167,7 @@ For example if we try to use TLS 1.2 against our TLS 1.3 only server by using:
 ```
 curl https://tls-server.local:8443 --cacert ./rootCA.crt --key ./client.key --cert ./client.crt --tls-max 1.2 -v
 ```
-we will receive and error :
+we will receive an error :
 ```
 * TLSv1.0 (OUT), TLS header, Certificate Status (22):
 * TLSv1.2 (OUT), TLS handshake, Client hello (1):

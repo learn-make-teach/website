@@ -7,25 +7,26 @@ draft = false
   image = 'spy-vs-spy.webp'
 +++
 ## Intro
-TLS (pour Transport Layer Security) est le successeur du protocol SSL qui est considéré non sécurisé. It sits on top of TCP to provide secrecy (encryption) and prevent tampering (signature) of identities and data. It uses asymmetric ciphering based on key/certificate pairs to exchange symmetric session keys, no manual exchange of initial secrets is required.
+TLS (pour Transport Layer Security) est le successeur du protocol SSL qui est considéré non sécurisé. Le but est d'apporter de la confidentialité (chiffrement) et d'éviter leur falsification (signature) des données et des identités. Ca utilise du chiffrement asymétrique basé sur des pairs de clés/certificats pour échanger des clés de sessions symétriques. Aucun échange de secret (clés privées) n'est requis au préalable.
 
-In its mutual form (mTLS), it also provides client authentication using a client key/certificate pair.
+Dans sa forme mutuelle (mTLS), on a aussi l'autentification de l'identité du client grace à une seconde paire de clé/certificat.
 
 ## Lab
-To illustrate how TLS works and where it can fail, we will setup a server and a client using openssl. It's the only tool you need to manipulate certificates, debug a connection, and much more. It should already be available on any linux distribution, and there are some ports for other OSes too (but for Windows, I'd recommend using WSL to use the linux implementation)
+Pour illustrer comment TLS fonctionne et où ça peut échouer, nous allons mettre en place un serveur et un client grâce à OpenSSL. Ce couteau suisse est l'unique outil nécessaire pour générer et vérifier des certificats, debugger une connection, et bien plus. OpenSSL est généralement déjà installé sur linux, il existe également des ports pour les autres OS (mais sous Windows je recommende d'utiliser WSL pour accéder à l'implémentation linux).
 
-### Certificates and trust
-TLS is based on asymmetric ciphering, which means that it uses a private key (usually called the key) and a public key (the certificate). The public key can encrypt data and verify signatures, the private key is required to decrypt and generate a signature. This means that the client can encrypt, the server will decrypt, sign, and the client will verify the signature.
+### Quelques certificats et un peu de confiance
 
-To start such a conversation with a given server, you will have to trust its public key first. In order to be actually manageable, you don't really have to trust each server individually. Just like in real life you don't know every single person but you trust the company who delivered their badge or the government who issued their ID, in the server world you will trust the Certificate Authorities (CA) who issue certificates to the servers. 
+TLS est basé sur du chiffrement asymétrique, on utilise donc une clé privée (généralement appelé _la clé_) et une clé publique (_le certificat_). La clé privée est nécessaire pour déchiffrer et signer, alors qu'il suffit de la clé publique pour chiffrer et vérifier la signature. Dans un échange standard, le client va donc chiffrer la donnée avec la clé publique, le serveur va la déchiffrer avec la clé privée. Le serveur va signer la donnée avec la clé privée, le client va vérifier que la signature est correcte.
 
-The server public key will be signed by a CA and this signature will be contained inside the server certificate. A client will be able to verify the signature using the CA public key. The CA public key itself will usually be signed by another CA and so on, until we reach the root CA (the one at the top of the chain), which will be self signed. You have to trust at least one CA of the chain, usually the root CA. Your OS has a trust store which contains the most common public CAs, on ubuntu for example they will be store in /etc/ssl/certs. This system trust store is regularly updated and contains the most common CAs.
+En tant que client, pour pouvoir établir une telle conversation avec un serveur, il va d'abord falloir faire confiance à sa clé publique. Pour que ça soit à peu près gérable, on ne fait pas directement confiance à chaque clé de chaque serveur individuellement. Pour faire un parallèle avec la vie courante, on ne connait pas individuellement chaque personne avec qui on échange mais on va faire confiance à la société qui lui a délivrer un badge ou au gouvernement qui lui a fournit une pièce d'identité. Pour nos serveurs, on va faire confiance à des Autorités de Certifications (AC ou CA en anglais), des entités qui sont habilités à délivrer des certificats.
 
-Let's check with google
+La clé publique de notre serveur va donc être signée par une CA, et cette signature est incluse dans le certificat que le serveur présente. Le client pourra donc vérifier cette signature en utilisant la clé publique de la CA, et donc en faisant juste confiance à la CA, le client pourra indirectement faire confiance aux serveurs. La clé publique de la CA sera généralement signée par une autre CA et ainsi de suite jusqu'à atteindre la CA racine (celle tout au bout de la chaine), qui sera autosignée (signée par elle même). Il faudra donc à minima faire confiance à cette CA racine pour pouvoir vérifier n'importe quel certificat de la chaine. Les OS ont un magasin contenant toutes les CA racines de confiance, et ce magasin est régulièrement mis à jour et permet d'avoir une solide base de référence. Sur Ubuntu par exemple, vous pouvez trouver ce magasin dans `/etc/ssl/certs`.
+
+Faisons un test avec Google:
 ```
 openssl s_client -connect google.com:443 <<< "Q"
 ```
-This little command will open a TLS connection to google.com on port 443. The `<<< "Q"` at the end is to close the connection right after it's been established, otherwise you'd have to `Ctrl+C`. The output contains this information:
+Cette commande va établir une connexion TLS avec google.com sur le port 443. Le `<<< "Q"` à la fin permet juste de fermer la connexion dès qu'elle est établie (pour éviter d'avoir un prompt et de devoir `Ctrl+C` pour en sortir). Si on regarde le résultat de cette commande, on trouve entre autre:
 ```
 Certificate chain
  0 s:CN = *.google.com
@@ -35,9 +36,8 @@ Certificate chain
  2 s:C = US, O = Google Trust Services LLC, CN = GTS Root R1
    i:C = BE, O = GlobalSign nv-sa, OU = Root CA, CN = GlobalSign Root CA
 ```
-Here we can see the chain of certificates, the root being GlobalSign Root CA, then 2 intermediate CA ( GTS Root R1 and GTS CA 1C3), then finally the server certificate (*.google.com). If we check in our trust store using the `openssl x509 -text -noout -in /etc/ssl/certs/GlobalSign_Root_CA.pem` command , we will find the GlobalSign Root CA, so our browsers and most tools will be able to verify Google's chain of certificate signature. You'll notice that the Issuer is the same as the Subject, this is what we call a self signed certificate.
+Ici on peut voir la chaine de certificats, la racine étant _GlobalSign Root CA_, puis 2 CA intermédiaires ( _GTS Root R1_ et _GTS CA 1C3_), puis enfin le certificat serveur (_*.google.com_). On peut vérifier que cette CA racine est bien dans notre magasin de confiance via la commande `openssl x509 -text -noout -in /etc/ssl/certs/GlobalSign_Root_CA.pem`. On obtient alors tout le détail de cette CA, ce qui permettra à nos navigateurs et nos outils de pouvoir se connecter à Google et vérifier la chaine de certificat. Parmis les infos de cette CA, on peut voir que l'émetteur (_Issuer_) est le même que le sujet (_Subject_), ce qui définit un certificat autosigné.
 ```
-
 Certificate:
     Data:
         Version: 3 (0x2)
@@ -96,45 +96,45 @@ Certificate:
          a4:80:6f:15:20:c9:de:0c:88:0a:1d:d6:66:55:e2:fc:48:c9:
          29:26:69:e0
 ```
-Note that some platforms (eg. Java's JRE) use a specific default trust store (/etc/ssl/certs/java/cacerts on ubuntu).
+A noter que certaines plateforme comme le JRE de Java utilise un magasin spécifique et par défaut pas celui du système (_/etc/ssl/certs/java/cacerts_ sur Ubuntu).
 
-### Test platform
+### Platforme de test
 
-We are going to need a server certificate. To be realistic, we will create a chain of 3 certificates, 2 CAs and a server. We could use a public CA (like Let's Encrypt who deliver free certificates), but we would be challenged to prove that we own the domain name we want a certificate for, usually by hosting a file at a specific path on a public facing address. For simplicity sake, we will generate our own CA. The only different is that our CA will not be in the system trust store so we will have to trust it explicitely by adding it to the user trust store or directly in the client. 
+Pour nos tests, nous allos avoir besion d'un certificat serveur. Pour être proche de la réalité, nous allons créer une chaine de 3 certificats, 2 CA et un certificat serveur. Nous pourrions utiliser une CA connue (comme _Let's encrypt_ qui fournit gratuitement des certificats) mais nous aurions besoin de prouver que le nom de domaine que nous voudrions utiliser nous appartient bien en réussissant un challenge (mise à disposition d'un fichier à la racine du domaine qu'on veut signer par exemple). Pour rester simple, nous allons générer notre propre CA racine, la difference sera donc que cette CA ne sera pas par défaut dans le magasin de confiance de l'OS, il faudra donc soit l'y rajouter, soit explicitement indiquer qu'on lui fait confiance dans nos outils.
 
-First we create the root CA private key first. We will generate an RSA key of length 4096 bits. It will be stored in the rootCA.key file in PEM format (ascii)
+Créons d'abord la clé privée de la CA racine. Nous allons générer une clé RSA de longueur 4096 bits, ce qui est assez standard. Cette clé sera stockée au format PEM (ascii) dans un fichier _rootCA.key_.
 ```
 openssl genrsa -out rootCA.key 4096
 ```
-Then the associated certificate (self signed certificate, -x509 -new), unencrypted (-nodes), using our key (-key rootCA.key), valid for a year (-days 365), with a proper subject:
+Créons ensuite le certificat associé (certificat autosigné: -x509 -new), non chiffré (-nodes), en utilisant notre clé privée (-key rootCA.key), valide pendant un an (-days 365) et avec un sujet correct:
 ```
 openssl req -out rootCA.crt -x509 -new -nodes -key rootCA.key -days 365 -subj '/CN=rootCA/O=LMT Corp'
 ```
-Now we'll create the intermediate CA private key just like we created the root:
+Créons maintenant la clé privée de la CA intermédiaire de la même façon que nous avons créer la racine:
 ```
 openssl genrsa -out intermediateCA.key 4096
 ```
-To sign it, we generate a CSR (certificate signing request)
+Pour la signer, nous devons générer un CSR (demande de signature de certificat):
 ```
 openssl req -new -key intermediateCA.key -out intermediateCA.csr -subj '/CN=intermediateCA/O=LMT Corp' -addext 'basicConstraints = critical,CA:true'
 ```
-and sign with the rootCA key
+Puis nous la signons en utilisant la clé privée de la CA racine:
 ```
 openssl x509 -req -in intermediateCA.csr -CA rootCA.crt -CAkey rootCA.key  -CAcreateserial -out intermediateCA.crt -copy_extensions=copyall
 ```
-And last, the server certificate:
+Enfin, même chose pour la clé privée du serveur:
 ```
 openssl genrsa -out server.key 4096
 ```
-CSR (with SAN):
+CSR (avec un SAN, obligatoire maintenant):
 ```
 openssl req -new -key server.key -out server.csr -subj '/CN=tls-server.local/O=LMT Corp' -addext 'subjectAltName=DNS:tls-server.local'
 ```
-signed by the intermediate CA:
+et on le signe avec la clé privée de la CA intermédiaire:
 ```
 openssl x509 -req -in server.csr -CA intermediateCA.crt -CAkey intermediateCA.key -CAcreateserial -out server.crt  -copy_extensions=copyall
 ```
-Server side should be ok, let's create a client CA and a client certificate. It's really the same thing as the server except for one extension in the certificate, allowing its usage for client authentication:
+Coté serveur ça devrait être tout bon, créons dans la foulée une CA et un certificat client. C'est la même chose que pour le serveur à part l'extension du certificat, nous devons préciser qu'il s'agira d'un certificat client:
 ```
 openssl genrsa -out clientCA.key 4096
 openssl req -out clientCA.crt -x509 -new -nodes -key clientCA.key -days 365 -subj '/CN=clientCA/O=LMT Corp'
@@ -142,33 +142,34 @@ openssl genrsa -out client.key 4096
 openssl req -new -key client.key -out client.csr -subj '/CN=client' -addext 'extendedKeyUsage = clientAuth'
 openssl x509 -req -in client.csr -CA clientCA.crt -CAkey clientCA.key -CAcreateserial -out client.crt  -copy_extensions=copyall
 ```
-All set! we can now start a server and test a connection. We will use openssl s_server for the server, and curl to test the connection.
+Enfin fini! Nous pouvons maintenant lancer un serveur et tester une connexion. Nous utilisons `openssl s_server` pour créer un serveur, et `curl` comme client:
 ```
 openssl s_server -key server.key -cert server.crt -accept 8443 -www -cert_chain chain.crt -build_chain -CAfile clientCA.crt -Verify 10 -verify_return_error -tls1_3 -strict -ciphersuites TLS_CHACHA20_POLY1305_S
 HA256
 ```
-This creates a server listening on port 8443, using our server key/crt pair and our clientCA certificate for client authentication. The client certificate is mandatory (-Verify, -verify_return_error). This server only accepts tls 1.3 connections using the TLS_CHACHA20_POLY1305_S cipher. I've concatenated the rootCA.crt and intermediateCA.crt into a chain.crt file to establish the complete chain of trust. This server will send an http response with a summary of the tls connection if asked nicely.
-To test it, we first need to add this line to our /etc/hosts file:
+Cette commande crée un serveur écoutant sur le port 8443, on utilise la paire clé/certificat de notre serveur et on spécifie notre CA clientCA pour l'autentification du client. On rend le certificat client obligatoire (-Verify, -verify_return_error). Ce serveur acceptera uniquement de connexions en TLS 1.3 utilisant le cipher (algorithme) TLS_CHACHA20_POLY1305_S. Le fichier _chain.crt_ contient la concatenation des certificats publiques de la CA racine (rootCA.crt) et intermédiaire (intermediateCA.crt) afin de créer une chaine de confiance complete. Ce serveur enverra un code HTTP en réponse avec un résumé des paramètres de la connexion si tout se passe bien.
+Pour le tester, nous devons d'abord ajouter cette ligne dans le fichier _/etc/hosts_:
 ```
 127.0.0.1 tls-server.local
 ```
-This will allow us to call the server using a proper domain name, which is also declared in its certificate. Time to make a client call:
+Ceci permet d'utiliser le nome de domaine tls-server.local, le SAN que nous avons déclaré lors de la création de notre certificat serveur. 
+Il est maintenant temps de faire notre premier appel client, en spécifiant notre paire de clé/certificat client et en indiquant qu'on fait confiance à la CA racine de notre serveur:
 ```
 curl https://tls-server.local:8443 --cacert ./rootCA.crt --key ./client.key --cert ./client.crt
 ```
-You should get an HTTP 200 status and a bunch of info.
-Now that it works, let's make it fail! For that we have to dive into the TLS handshake.
-# TLS handshake
-I'm not going to explain every technical detail of the TLS protocol but focus on what can go wrong between the client and the server.
-Before the TLS handshake, there is a TCP handshake of course. So if you can't resolve the host name (DNS issue), can't route (gateway issue) or timeout (firewall issue), the problem is in the network configuration and not in the TLS one.
+Ce qui devrait vous retourner un status HTTP 200 et tout un tas d'infos passionnantes.
+Maintenant que nous avons prouvé que ça marche, on peut commencer à échouer. Pour cela nous devons comprendre les grands principes du handshake TLS.
+# TLS handshake![Handshake mTLS simplifié](/img/handshake.png)
+Je ne vais pas rentrer dans les détails technique du protocole TLS qui est vraiment très riche (et parfois complexe) mais me concentrer sur les échanges qui peuvent poser problème entre le client et le serveur.
+Avant le handshake TLS, il y a tout d'abord un handshake TCP, ce qui veut dire que si vous ne résolvez par l'hote (problème DNS), n'avez pas de route (problème de gateway/proxy), ou si vous avez un timeout (problème de firewall), il faudra d'abord vous attarder sur votre configuration réseau avant de regarder coté TLS.
 
 ## Client Hello
-The client sends its list of supported TLS versions and ciphers. The server checks if he supports one version and one cipher is this list (selecting the strongest cipher available on both sides). If the server can't find a common ground of TLS version & cipher, it will send an error and close the connection.
-For example if we try to use TLS 1.2 against our TLS 1.3 only server by using:
+Le client commence par envoyer la liste de versions TLS et cipher qu'il supporte. Le server vérifie qu'il supporte au moins une version et un cipher dans cette list. Il sélectionne la version la plus récente et le cipher le plus sécurisé. Si le serveur ne trouve pas de version commune ou de cipher commun, il envoie une erreur et ferme la connexion.
+Par exemple si on essaye d'utiliser TLS 1.2 coté client alors que notre serveur ne supporte que TLS 1.3:
 ```
 curl https://tls-server.local:8443 --cacert ./rootCA.crt --key ./client.key --cert ./client.crt --tls-max 1.2 -v
 ```
-we will receive and error :
+Nous recevons une erreur:
 ```
 * TLSv1.0 (OUT), TLS header, Certificate Status (22):
 * TLSv1.2 (OUT), TLS handshake, Client hello (1):
@@ -176,11 +177,11 @@ we will receive and error :
 * TLSv1.2 (IN), TLS alert, protocol version (582):
 curl: (35) error:0A00042E:SSL routines::tlsv1 alert protocol version
 ```
-Same thing with the cipher:
+De la même manière, avec un cipher non supporté par notre serveur:
 ```
 curl https://tls-server.local:8443 --cacert ./rootCA.crt --key ./client.key --cert ./client.crt --tls13-ciphers TLS_AES_256_GCM_SHA384 -v
 ```
-will return the generic error:
+Nous recevons une erreur plsu générique:
 ```
 * TLSv1.0 (OUT), TLS header, Certificate Status (22):
 * TLSv1.3 (OUT), TLS handshake, Client hello (1):
@@ -188,27 +189,27 @@ will return the generic error:
 * TLSv1.3 (IN), TLS alert, handshake failure (552):
 curl: (35) error:0A000410:SSL routines::sslv3 alert handshake failure
 ```
-If the server and client share a common tls version and cipher, then the server will send its hello.
+Si le client et le serveur ont une version et cipher en commun, le serveur envoie à son tour son Hello.
 ## Server Hello, certificates, acceptable CAs
-The server sends the selected TLS version and cipher, followed by :
-- its certificate chain
-- a request for a client certificate signed by a list of acceptable CAs
+Le serveur envoie la version TLS et le cipher sélectionnés, suivi de:
+- sa chaine de certificat
+- dans le cas de mTLS une demande de certificat client accompagnée de la liste des CA autorisées
 
-The client will first verify the server:
-- check that the server certificate chain is valid (each certificate is signed by the previous one in the chain, none is expired), and that at least the root is trusted
-- check that the server certificate matches the domain name we called
-Since those checks are on the client side, they can be disabled (insecure or trust all mode).
-For example if we don't trust the root:
+Le client va vérifier:
+- que la chaine de certificats présentée par le serveur est valide: chaque certificat est signé par le certificat suivant dans la chaine, aucun n'est expiré, et qu'il fait confiance à un des certificats (généralement la CA racine)
+- que le certificat présenté par le serveur correspond bien au nom de domaine qu'il essaye de joindre (tls-server.local dans notre exemple)
+Vu que ces vérifications sont faites par le client, elles peuvent être ignorées ( mode non sécurisé ou "trust all").
+Par exemple si retire la CA racine de notre liste de CA de confiance:
 ```
 curl https://tls-server.local:8443 -v
 ```
-the client fails with 
+Le client échoue avec:
 ```
 * TLSv1.2 (OUT), TLS header, Unknown (21):
 * TLSv1.3 (OUT), TLS alert, unknown CA (560):
 * SSL certificate problem: self-signed certificate in certificate chain
 ```
-and if we use a different server name than the one in the server certificate:
+Si on appelle un nom de domaine mais que le serveur présente un certificat pour DN différent:
 ```
 curl https://127.0.0.1:8443 --cacert ./rootCA.crt -v
 ```
@@ -216,44 +217,45 @@ curl https://127.0.0.1:8443 --cacert ./rootCA.crt -v
 *  subjectAltName does not match 127.0.0.1
 * SSL: no alternative certificate subject name matches target host name '127.0.0.1'
 ```
-The client will by default check the domain name with the SAN or Subject alternative names declared in the server certificate. We only provided subjectAltName=DNS:tls-server.local when we created our server certificate, so it's not valid for 127.0.0.1.
-We can ignore those errors using -k, but we shouldn't. These checks are here to ensure that you are indeed talking to the server you expect, and not someone else (man in the middle, someone intercepts your network traffic and tries to impersonate the target server, but this persone won't have the proper certificate for the server).
+Le client va par défaut vérifier que le nom de domaine est bien dans le SAN (Subject Alternative Names) du certificat du serveur. Comme nous avons juste mis subjectAltName=DNS:tls-server.local lors de la création du certificat, celui-ci n'est pas valide pour 127.0.0.1.
+Nous pouvons ignorer ces vérifications en utilisant le paramètre -k, mais il est toujours préférable d'avoir un handshake valide. Ces vérifications nous permettent en effet de vérifier que le serveur qui nous répond est bien celui qui doit nous répondre et pas quelqu'un d'autre (attaque de l'homme du milieu ou man in the middle, quelqu'un intercepte le traffic et se fait passer pour le serveur afin de récupérer vos données, cet individu n'aura pas un certificat valide).
 
-## Client certificate
-The next step is for your client to select a certificate matching what the server requested. The server should send a list of CA, which you can see using openssl_client:
+## Certificat client
+L'étape d'après pour notre client est l'envoi de son certificat en accord avec ce que le serveur demande. Le serveur devrait envoyer une liste de CA qu'il considère valide, on peut le voir grâce à `openssl s_client`:
 ```
 openssl s_client -connect tls-server.local:8443
 ```
-contains
+La réponse va contenir entre autre:
 ```
 Acceptable client certificate CA names
 CN = clientCA, O = LMT Corp
 ```
-At this point you will need your client key and certificate pair, you will send the certificate to the server (and a signature to prove you actually own the key).
-If the client doesn't provide any certificate, an invalid certificate (usually expired) or not matching the acceptable CAs, the server will reject it.
-No cert:
+Pour satisfaire le serveur, on va donc lui envoyer notre certificat signé par cette CA, ainsi qu'une signature qui va prouvée qu'on possède bien la clé privée associée à ce certificat.
+Si le client ne possède pas de certificat correspondant à la demande (parce qu'il n'a pas de certificat signé par cette CA ou que celui qu'il a est expiré), alors le serveur fermera la connexion avec une erreur.
+Pas de certificat:
 ```
 * TLSv1.2 (IN), TLS header, Supplemental data (23):
 * TLSv1.3 (IN), TLS alert, unknown (628):
 * OpenSSL SSL_read: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
 ```
-Unacceptable cert:
+Certificat signé par une CA inconnue:
 ```
 * TLSv1.2 (IN), TLS header, Supplemental data (23):
 * TLSv1.3 (IN), TLS alert, unknown CA (560):
 * OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0
 ```
-Note that some clients (eg. java) will fail on the client side if they don't find a valid client certificate in their keystore, some will try anyway to send whatever you specify or nothing at all.
-As soon as you start receiving some HTTP response from the server, it means your handshake is successful. Congratulations!
+A noter que certains client (comme Java), échoueront s'ils ne trouvent pas de certificats valide dans leur magasin alors que d'autres clients peuvent envoyer un certificat même en sachant qu'il ne correspond pas (ex: curl), voire pas de certificat du tout alors que le serveur en demande un.
 
-# TLDR - Troubleshooting
-| Error | usual source |
+Si vous recevez un code HTTP de la part du serveur, c'est que le handshake a réussi. Félicitations!
+
+# TLDR - Pourquoi ça marche pas
+| Erreur | Cause fréquente |
 | ----- | ------------ |
-| The client get disconnected right after the client hello | the server couldn't find a compatible TLS version/cipher in the list provided by the client. | 
-| The client closes the connection right after the server hello, complaining about an unknown CA or a self-signed certificate | your trust store doens't contain the root CA of the server |
-| The client closes the connection right after the server hello, complaining about an mismatched server name | the hostname you use to call the server doesn't match the name declared in the certificate. Either the server is misconfigured, or you need to adapt your network configuration (/etc/hosts). Check the server certificate using openssl s_client to retrieve it, and openssl x509 to parse it. The hostname should match one of the SAN entries of the certificate |
-| The client aborts the handshake after the server hello | the client is strict and fails to find a valid client certificate to send to the server. Check that your keystore contains your key, your trust store your certificate, and depending on the language you may need to trust the CA of the certificate too. |
-| The server closes the connection requesting a client certificate | you didn't send a client certificate. check that you have valid a key/certificate pair in your trust store/key store, matching the server Acceptable CAs field. |
-| The server closes the connection complaining that the CA is unknown | the client certificate you presented does not match the expected CA. Check your certificate CA against the list of Acceptable CAs provided by the server |
+| Le client est déconnecté juste après le Client Hello | Le serveur n'a pas trouvé de version TLS ou cipher compatible avec ce que le client supporte. Vérifiez les versions des outils/librairies coté client et serveur | 
+| Le client ferme la connexion juste après le Server Hello, en se plaignant d'un CA inconnue ou autosignée | Le client ne fait pas confiance à la CA racine du serveur. Soit elle n'est pas dans son magasin de confiance (celui de l'OS, celui du JRE, en ligne de commande), ou ce n'est pas la bonne. Vérifiez la chaine de certificat du serveur avec openssl et comparez avec le magasin utilisé |
+| Le client ferme la connexion juste après le Server Hello, se plaignant que le nom du serveur ne correspond pas | Le nom de domaine que vous appelez ne correspond pas au SAN déclaré dans le certificat du serveur. Ceci peut venir d'un problème de configuration du serveur (reverse proxy en coupure TLS), ou vous avez besoin d'adapter votre configuration réseau via /etc/hosts (peu courant dans un setup de production). Vérifez ce qui est déclaré dans le certificat serveur en utilisant `openssl s_client -showcerts` pour le récupérer, puis `openssl x509` pour le parser. Le nom de domaine doit se trouver dans le SAN du certificat. |
+| Dans un setup mTLS, le client abandonne la connexion juste après le Server Hello, indiquant qu'il n'a pas de certificat à présenter | Le client est strict (ex: java) et ne trouve pas de certificat client valide correspondant à ce que le serveur demande, ou le serveur ne demande rien. Vérifiez ce que le serveur demande (partie acceptable CAs, via `openssl s_client`), et comparer avec votre certificat client. Vérifiez aussi le magasin utilisé (keystore pour la clé privée, truststore pour le certificat). Certaines technologies de client nécessitent d'avoir la chaine CA cliente dans un magasin de confiance (truststore) en plus de la CA serveur. |
+| Le serveur ferme la connexion en demandant un certificat client | Le serveur est configuré pour faire du mTLS et vous n'avez pas envoyé de certificat client. Vérifiez que vous avez un certificat valide signé par la CA attendue par le serveur et que vous avez la clé privée correspondante dans vos magasins (truststore & keystore) |
+| Le serveur ferme la connexion en se plaignant que la CA est inconnue | Le certificat client envoyé n'est pas signé pas une CA que le serveur reconnait. Vérifiez la CA attendue par le serveur (acceptable CAs) et celle qui a signé le certificat client (`openssl x509` pour parser votre certificat client, la CA est appelée Issuer) |
 
 
