@@ -2,6 +2,7 @@
 title = 'TLS handshake demystified'
 date = 2024-02-29T19:40:22+01:00
 summary = 'Understand how the mTLS handshake works and where it can fail'
+tags = ['Security', 'Language agnostic']
 draft = false
 [params]
   image = 'spy-vs-spy.webp'
@@ -219,7 +220,7 @@ The client will by default check the domain name with the SAN or Subject alterna
 We can ignore those errors using -k, but we shouldn't. These checks are here to ensure that you are indeed talking to the server you expect, and not someone else (man in the middle, someone intercepts your network traffic and tries to impersonate the target server, but this persone won't have the proper certificate for the server).
 
 ### Client certificate
-The next step is for your client to select a certificate matching what the server requested. The server should send a list of CA, which you can see using openssl_client:
+The next step is for your client to select a certificate matching what the server requested. The server should send a list of CA, which you can see using `openssl s_client`:
 ```
 openssl s_client -connect tls-server.local:8443
 ```

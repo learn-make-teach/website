@@ -139,10 +139,28 @@ color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity));
     padding-left:10px;
   }
 
+  .pros {
+    list-style-type: none;
+  }
+  .pros li>i {
+    color: green;
+    padding-right: 10px;
+  }
+  .cons {
+    list-style-type: none;
+  }
+  .cons li>i {
+    color: red;
+    padding-right: 10px;
+  }
   /* homepage */
 
   .posts a {
     text-decoration: none;
+  }
+
+  .posts .badge-pill {
+    margin-right: 2px;
   }
 
   .card {

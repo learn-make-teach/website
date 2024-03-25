@@ -2,6 +2,7 @@
 title = 'TLS handshake démistifié'
 date = 2024-02-29T19:40:22+01:00
 summary = 'Comprendre comment fonctionne le handshake mTLS et pourquoi il peut échouer'
+tags = ['Securité', 'Indépendant du language']
 draft = false
 [params]
   image = 'spy-vs-spy.webp'
@@ -257,5 +258,4 @@ Si vous recevez un code HTTP de la part du serveur, c'est que le handshake a ré
 | Dans un setup mTLS, le client abandonne la connexion juste après le Server Hello, indiquant qu'il n'a pas de certificat à présenter | Le client est strict (ex: java) et ne trouve pas de certificat client valide correspondant à ce que le serveur demande, ou le serveur ne demande rien. Vérifiez ce que le serveur demande (partie acceptable CAs, via `openssl s_client`), et comparer avec votre certificat client. Vérifiez aussi le magasin utilisé (keystore pour la clé privée, truststore pour le certificat). Certaines technologies de client nécessitent d'avoir la chaine CA cliente dans un magasin de confiance (truststore) en plus de la CA serveur. |
 | Le serveur ferme la connexion en demandant un certificat client | Le serveur est configuré pour faire du mTLS et vous n'avez pas envoyé de certificat client. Vérifiez que vous avez un certificat valide signé par la CA attendue par le serveur et que vous avez la clé privée correspondante dans vos magasins (truststore & keystore) |
 | Le serveur ferme la connexion en se plaignant que la CA est inconnue | Le certificat client envoyé n'est pas signé pas une CA que le serveur reconnait. Vérifiez la CA attendue par le serveur (acceptable CAs) et celle qui a signé le certificat client (`openssl x509` pour parser votre certificat client, la CA est appelée Issuer) |
-
-
+{.table .table-striped}

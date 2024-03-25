@@ -6,20 +6,24 @@
     <div class="posts">
       <h1 class="pb-2">{{T "latest_posts"}}</h1>
       <div class="row">
-        {{ with (index (where site.RegularPages "Type" "blog").ByDate.Reverse 0) }}
+        {{ range first 5 (where site.RegularPages "Type" "blog").ByDate.Reverse }}
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-4">
           <a href="{{ .RelPermalink }}">
             <div class="card">
-              <img src="/img/{{ .Params.image}}" class="card-img-top">
+              <img src="/img/{{ .Params.image}}" class="card-img-top p-3">
               <div class="card-body">
-                <p class="card-title fw-bold">{{ .Title }}</p>
+                <p class="card-title fw-bold m-0">{{ .Title }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ .Date.Format (.Site.Params.dateFormat | default "2006-01-02" )  }}</small></p>
                 <p class="card-text">{{ .Summary }}</p>
-                <p class="card-text"><small class="text-body-secondary">{{ .Date.Format (.Site.Params.dateFormat | default "2006-01-02" )  }}</small></div>
+                <p class="card-text m-0">
+                  {{- range .Params.tags }}<span class="badge bg-secondary badge-pill">{{ . }}</span>{{- end }}
               </div>
             </div>
           </a>
         </div>
       {{ end }}
+      </div>
     </div>
-  </div>
+</div>
+
 {{- end -}}

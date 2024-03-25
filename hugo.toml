@@ -2,8 +2,10 @@ baseURL = 'https://learn-make-teach.org/'
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = 'true'
 title = 'Learn/Make/Teach'
+[markup.goldmark.renderer]
+  unsafe = "true"
 [markup.goldmark.parser.attribute]
-block = true
+  block = true
 [languages]
   [languages.en]
     languageName = 'English'
