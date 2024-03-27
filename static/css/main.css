@@ -158,7 +158,11 @@ color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity));
     padding-right: 10px;
   }
   /* homepage */
-
+  @media (max-width: 550px) {
+    .display-1 {
+      font-size: 2rem;
+    }
+  }
   .posts a {
     text-decoration: none;
   }
