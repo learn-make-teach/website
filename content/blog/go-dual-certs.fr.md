@@ -45,6 +45,4 @@ openssl s_client -connect tls-server.local:8443 -sigalgs "RSA-PSS+SHA256" -CAfil
 ```
 On obtient cette fois-ci `Peer signature type: RSA-PSS` ainsi que le certificat RSA.
 
-On a donc un serveur qui gère les courbes elliptiques et qui repasse sur RSA au cas où 😎.
-
-
+On a donc un serveur qui gère les courbes elliptiques et qui repasse sur RSA au cas où 😎. Et le code est [ici](https://github.com/learn-make-teach/go-samples/blob/main/cmd/dualtls/main.go)!

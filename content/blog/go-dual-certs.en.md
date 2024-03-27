@@ -43,6 +43,4 @@ we can also force using RSA :
 openssl s_client -connect tls-server.local:8443 -sigalgs "RSA-PSS+SHA256" -CAfile rootCA.crt -showcerts
 ```
 This time we get `Peer signature type: RSA-PSS` and the certificate is the RSA one.
-We now have a server ready for eliptic curve with a fallback on RSA 😎.
-
-
+We now have a server ready for eliptic curve with a fallback on RSA 😎. You can find the code [here](https://github.com/learn-make-teach/go-samples/blob/main/cmd/dualtls/main.go)!
