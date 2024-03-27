@@ -139,6 +139,10 @@ color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity));
     padding-left:10px;
   }
 
+  .blog p {
+    text-align: justify;
+  }
+
   .pros {
     list-style-type: none;
   }

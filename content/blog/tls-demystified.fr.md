@@ -2,7 +2,7 @@
 title = 'TLS handshake démistifié'
 date = 2024-02-29T19:40:22+01:00
 summary = 'Comprendre comment fonctionne le handshake mTLS et pourquoi il peut échouer'
-tags = ['Securité', 'Indépendant du language']
+tags = ['Securité', 'TLS', 'Indépendant du language']
 draft = false
 [params]
   image = 'spy-vs-spy.webp'

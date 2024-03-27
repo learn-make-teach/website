@@ -2,7 +2,7 @@
 title = 'TLS handshake demystified'
 date = 2024-02-29T19:40:22+01:00
 summary = 'Understand how the mTLS handshake works and where it can fail'
-tags = ['Security', 'Language agnostic']
+tags = ['Security', 'TLS', 'Language agnostic']
 draft = false
 [params]
   image = 'spy-vs-spy.webp'

@@ -5,11 +5,16 @@ summary = "Comment j'utilise Hugo pour générer ce site et Github Actions pour 
 tags = ['Hugo', 'Github Actions', 'Website']
 draft = false
 [params]
-  image = 'hugo-logo-wide.svg'
+  image = 'hugo-logo-square.svg'
 +++
 Quand j'ai décidé de créer ce blog, je me suis demandé comment j'allais le faire. J'avais déjà réalisé [un site vitrine avec Wordpress](https://agnes-coaching.fr) donc j'avais envie d'apprendre autre chose. J'ai choisi Hugo parce que la séparation contenu/présentation colle bien avec mes habitudes de développement de logiciel.
+
+Le but de cet article n'est pas de plonger dans les méandres d'Hugo ni de paraphraser le [tutoriel](https://gohugo.io/getting-started/) mais de donner un aperçu de ce qu'est Hugo, comme il fonctionne et certaines des spécificités que j'ai du utiliser pour réaliser ce site.
+
+Toutes les sources de ce site sont disponibles sur [Github](https://github.com/learn-make-teach/website).
+
 ## Présentation de Hugo
-[Hugo](https://gohugo.io/) est un générateur de site statique. Concrétement ça signifie qu'il y a une phase de build et que le résultat de ce build est votre site. Donc au runtime il n'y a aucune dépendance sur Hugo, le site peut être servi par n'importe quel serveur web (nginx, apache... ). On va donc pouvoir travailler sur les sources, les gérer dans git, builder le site et le publier où on veut via la CI! Workflow qui parait familier :)
+[Hugo](https://gohugo.io/) est un générateur de site statique. Concrétement ça signifie qu'il y a une phase de build et que le résultat de ce build est votre site. Donc au runtime il n'y a aucune dépendance sur Hugo, le site peut être servi par n'importe quel serveur web (nginx, apache... ). On va donc pouvoir travailler sur les sources, les gérer dans git, builder le site et le publier où on veut via la CI! Workflow qui parait familier 👌
 
 Pour le rendu du site, Hugo utilise des templates. Chaque page est un fichier dans content (format markdown ou html), qui va être mixé avec un template pour la mise en forme et qui va produire une page html. On peut donc écrire facile ses articles en md sans se soucier du rendu, et ils auront tous la même apparence puisqu'un même template sera utilisé pour tous les articles. Et par la suite, si on veut changer l'apparence du site, on modifie le template et tout reste cohérent. Il existe des themes prédéfinis qu'on peut échanger assez facilement via une ligne dans un fichier de configuration.
 
@@ -25,7 +30,7 @@ En résumé:
 {.cons}
 
 ## Articles
-Comme dit plus tôt, chaque page du site correspond d'abord à un fichier markdown ou html dans _content/_. Je mettrais tous les articles dans un sous-dossier _blog/_, les fichers en français se terminent par .fr.md ou .fr.html, ceux en anglais par .en.md ou .en.html (on peut aussi créer un sous dossier par langue mais je préfère voir les articles dans les deux langues l'un à coté de l'autre).
+Comme dit plus tôt, chaque page du site correspond d'abord à un fichier markdown ou html dans _content/_. Je mettrai tous les articles dans un sous-dossier _blog/_, les fichers en français se terminent par .fr.md ou .fr.html, ceux en anglais par .en.md ou .en.html (on peut aussi créer un sous dossier par langue mais je préfère voir les articles dans les deux langues l'un à coté de l'autre).
 
 Chaque fichier comporte deux sections, une première partie appelée _front matter_ qui sont les métadonnées de la page (titre, date de création, résumé...), et le contenu en lui même.
 
@@ -55,6 +60,16 @@ Le CV est construit différement. Il y a toujours un fichier dans _content/_, c'
     {{ end }}
 </ul>
 ```
+Le yaml correspondant contient:
+```
+skills:
+  languages:
+    - level: native
+      name: French
+    - level: fluent
+      name: English
+```
+
 On utilise la macro `{{T key}}` pour les traductions. Il y a deux fichiers _en.yaml_ et _fr.yaml_ dans _i18n/_ qui servent de dictionnaires en fonction de la langue de la page.
 ## Déploiement
 J'utilise Github Actions pour lancer le build du site puis le déployer. Le build est assez trivial, il suffit d'installer Hugo, de récupérer le code, de lancer Hugo et d'archiver le résultat (_public/_):
@@ -90,7 +105,7 @@ J'utilise Github Actions pour lancer le build du site puis le déployer. Le buil
           path: ./public
 ```
 
-Le site est hébergé chez Hostinger qui autorise l'accès par SSH. Il est donc facile d'utiliser rsync over ssh pour pousser les fichiers générés:
+Le site est hébergé chez Hostinger qui autorise l'accès par SSH. Il est donc facile d'utiliser rsync over ssh pour pousser les fichiers générés. Pour ça j'utilise l'action _easingthemes/ssh-deploy_:
 ```
   deploy:
     runs-on: ubuntu-latest
