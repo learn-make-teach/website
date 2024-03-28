@@ -1,14 +1,15 @@
-title: Développeur sénior Java/Go, architecte solutions
+title: Développeur sénior Java/Go, architecte hands-on
 intro: "Architecte et avant tout développeur, j'aime le challenge, apprendre de nouvelles choses et transmettre mes connaissances. J'aborde les projets dans leur ensemble, de l'analyse du besoin à l'exploitation en production. Travailler dans une startup m'a appris à être efficace et agile, chez Worldline j'ai appris à prendre en compte les contraintes d'échelle d'un grand groupe. Je travaille en distanciel avec des équipes distribuées depuis 4 ans."
 experience:
-  - title: architecte solutions / tech lead Java & Go
+  - title: Tech lead Java & Go / Architecte hands-on 
     dates: Septembre 2015-Février 2024
     company: Ingenico / Worldline
     desc:
-      - "Je rejoins Ingenico en tant qu'architecte solution. Je participe principalement à la définition des architectures des nouvelles fonctionnalités de nos applications de paiement (C++/Postgresql). J'introduis un nouveau modèle orienté services pour certaines fonctionnalités afin de les isoler du coeur du traitement du paiement. J'accompagne les équipes à migrer vers Go pour ces services (présentation du language, aide à la formation, développement de libraries & services, référent technique). En parallèle, je forme aussi plusieurs équipes à Git pour préparer la migration depuis SVN. La dernière application pour laquelle je définis l'architecture utilisera Kafka comme source de vérité (Event sourcing) dans le but de réduire les dépendances à une base de données centralisée. Cette application sera écrite en Go et sera composée de multiples services indépendants."
-      - "Au bout d'un an, on me propose de prendre en charge l'équipe développant le service de tokenisation. C'est un service partagé écrit en Java/Spring exposant une API Rest et stockant ses données dans une base Postgresql. Son rôle est de remplacer les numéros de carte de crédit (donnée sensible) par un token (non sensible). Je participe à l'intégration de ce service dans plusieurs divisions d'Ingenico puis de Worldline. Je collabore également avec des marchands importants de la grande distribution pour organiser leur migration vers ce service en limitant l'impact sur leur activité. Quand je quitte la société, plus de 2 milliards de tokens sont stockés et le service sert plus de 10 millions de requetes quotidiennes, avec un temps de réponse moyen de 15ms."
+      - "Je rejoins chez Ingenico une équipe d'architecture dont le but est de se rapprocher des équipes de développement, mon expertise technique permettant d'avoir une approche plus appliquée (hands-on) de l'architecture: réalisation de POC, de librairies, référent technique..."
+      - "Je participe dans un premier temps à la définition des architectures des nouvelles fonctionnalités de nos applications de paiement (C++/Postgresql). J'introduis un nouveau modèle orienté services pour certaines fonctionnalités afin de les isoler du coeur du traitement du paiement. J'accompagne les équipes à migrer vers Go pour ces services (présentation du language, aide à la formation, développement de libraries & services, référent technique). En parallèle, je forme aussi plusieurs équipes à Git pour préparer la migration depuis SVN. La dernière application pour laquelle je définis l'architecture utilisera Kafka comme source de vérité (Event sourcing) dans le but de réduire les dépendances à une base de données centralisée. Cette application sera écrite en Go et sera composée de multiples services indépendants."
+      - "Au bout d'un an, on me propose d'être tech lead dans l'équipe développant le service de tokenisation. C'est un service partagé écrit en Java/Spring exposant une API Rest et stockant ses données dans une base Postgresql. Son rôle est de remplacer les numéros de carte de crédit (donnée sensible) par un token (non sensible). Je participe à l'intégration de ce service dans plusieurs divisions d'Ingenico puis de Worldline. Je collabore également avec des marchands importants de la grande distribution pour organiser leur migration vers ce service en limitant l'impact sur leur activité. Quand je quitte la société, plus de 2 milliards de tokens sont stockés et le service sert plus de 10 millions de requetes quotidiennes, avec un temps de réponse moyen de 15ms."
       - "Après l'acquisition d'Ingenico par Worldline, je me concentre sur l'utilisation des HSM (hardware security modules) au sein de notre unité commerciale. Je définis et implémente un répartiteur de charge afin d'améliorer l'utilisation des resources et la disponibilité de nos HSMs (protocol propriétaire au dessus de TCP). Cette application doit être légère et rapide, un HSM ayant en général un temps de réponse inférieur à 5 millisecondes. Je développe cette application en Go et l'amène en production dans notre cloud privé. A partir de ce moment, chaque appel à un HSM passera par cette application (100 millions d'appels par jour). Je travaille ensuite sur le développement de services à forte valeur ajoutée (chiffrement, mac, gestion de code pin) exposant des API HTTP/Json devant ces HSMs. Je travaille alors en tant qu'architecte/tech lead avec une équipe de 6 personnes en Suède. Comme cette équipe est junior en Go, j'accompagne leur formation et je suis leur référent technique tout en continuant à développer les services/librairies les plus complexes."
-      - "Je passe également en charge du service de tokenisation des schemes, un service unifiant les API de tokenisation de Visa, Mastercard et Carte Bancaire en une seule API interne. Ce service est écrit en Java/Spring et l'équipe de développement est basée en Inde."
+      - "Je passe également architecte et tech lead du service de tokenisation des schemes, un service unifiant les API de tokenisation de Visa, Mastercard et Carte Bancaire en une seule API interne. Ce service est écrit en Java/Spring et l'équipe de développement est basée en Inde."
       - "Tous nos logiciels sont développés en suivant la méthode Scrum et déployés dans notre cloud privé. On utilise Gitlab pour orchestrer le déploiement de ces applications (infra as code, Terraform, Puppet). L'équipe est responsable du logiciel jusqu'à son exploitation, ce qui inclue l'intégration continue, le déploiement, la centralisation et exploitation des logs, la production de métriques et tableaux de bord et alertes proactives et réactives."
       - "Les composants sur lesquels j'interviens ont des contraintes de haute disponibilité, de sécurité et de scalabilité. Je suis également en charge des audits de sécurité PCIDSS et PCIPIN de mes applications. J'assure enfin la montée en compétence de différentes équipes de développement (documentation, présentations, formations, revues de code)."
     techs:
@@ -23,6 +24,7 @@ experience:
       - Puppet
       - Docker
       - Linux
+      - Scrum
       - DevSecOps
   - title: développeur sénior Java / architecte
     dates: Août 2007- Août 2015
@@ -86,8 +88,8 @@ skills:
         - Terraform
         - Cassandra
   soft:
-    - Problem solving
-    - Adaptability
+    - Résolution de problèmes
+    - Adaptabilité
     - Collaboration
     - Leadership
 education:
