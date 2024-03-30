@@ -1,24 +1,27 @@
-title: Senior Java/Go developper, Solution architect
-intro: "Architect but first and foremost developer, I enjoy a new challenge, learn new things and share my knowledge. I take projects from the requirements analysis all the way to production. Working in a startup taught me to be efficient and agile, while in a big company I learned to work with all sorts of technical and non technical constraints. I've been working in full remote with distributed team for the last 4 years."
+title: Tech Lead Java/Go, Hands-on  architect
+intro: "Architect but first and foremost developer and tech enthusiast, I enjoy a new challenge, learning new things and sharing my knowledge. I take projects from the requirements analysis all the way to production. Working in a startup taught me to be efficient and agile, while in a big company I learned to work with all sorts of technical and non technical constraints. I've been working in full remote with distributed teams for the last 4 years."
 experience:
-  - title: Solution Architect
+  - title: Tech Lead Java/Go - Hands on architect
     dates: September 2015-February 2024
     company: Ingenico / Worldline
     desc:
-      - "I join Ingenico as a Solution Architect. I mainly define the architecture of new features in the Card Present payment applications (C++/Postgresql). I introduce a new service oriented model for some of those new feature to isolate them from the core payment apps. I help the teams embrace the Go language for these services. In parallel, I also train multiple teams on Git for the migration from SVN. The last application I design uses Kafka as a source of truth to remove the need of IPC message queues and reduce the dependency on a central database. This application will be written in Go and will be composed of multiple independent services."
+      - "I join Ingenico as a hands-on Solution Architect, our goal is to work as closely as possible with the development team, participating in the development of POCs, libraries or certain key features. I first define the architecture of new features in the Card Present payment applications (C++/Postgresql). I introduce a new service oriented model for some of those new features to isolate them from the core payment apps. I help the C++ teams embrace the Go language for these services. In parallel, I also train multiple teams on Git for the migration from SVN. The last application I design uses Kafka as a source of truth to remove the need of IPC message queues and reduce the dependency on a central database. This application will be written in Go and will be composed of multiple independent services."
       - "After a year, I'm put in charge of the team developing the tokenisation service. It's a shared service written in Java/Spring exposing a Rest API and storing its data in a Postgresql database. Its role is to replace a sensitive credit card number (PAN) with a non-sensitive token. I participate in its integration by multiple internal business units of Ingenico and then Wordline. I also work with multiple big retail customers to define and operate the migration of their data to this service with minimum impact on their business. When I leave the company, more than 2 billion tokens are stored and it serve around 10 million requests every day with an average response time of 15ms."
       - "After the merge with Worldline, I focus on the HSM usage in my business unit. I design and develop a loadbalancer to improve the availability and usage of our HSMs (specific protocol over TCP). This application has to be light and fast as an HSM response is usually within 3ms. I develop this application in Go and bring it to production in our local cloud. Every HSM call will go through this application (100 million per day). I then start working on higher level services with HTTP APIs (encryption, mac, pin...). I'm working with a team of 6 people in Sweden."
       - "I'm also in charge of the scheme tokenisation service, a API translation layer in front of Visa, Mastercard and CB's own tokenisation services. This service is written in Java/Spring and the development team is based in India."
-      - "All our services are developped using the scrum method and deployed in our local cloud using Puppet. I work from dev to production in a devsecops way, using Gitlab to orchestrate the deployment lifecycle. I also manage the security reviews and certifications for my services (PCI DSS/PCI PIN)."
+      - "All our services are developped using the scrum method and deployed in our local cloud using Gitlab-CI/Terraform/Puppet. I work from dev to production in a devsecops way, using Gitlab to orchestrate the deployment lifecycle. I also manage the security reviews and certifications for my services (PCI DSS/PCI PIN). I ensure knowledge sharing among and across the teams through documentation, presentations, training and code reviews."
     techs:
       - Java
       - Go
+      - C++
       - Spring
       - Postgresql
       - RabbitMQ
       - Kafka
       - HSM
       - Puppet
+      - Docker
+      - Linux
       - Scrum
       - DevSecOps
   - title: Senior Dev / Architect
@@ -58,7 +61,7 @@ skills:
   languages:
     - level: native
       name: French
-    - level: fluent
+    - level: advanced
       name: English
   techs:
     - level: Expert
@@ -77,6 +80,7 @@ skills:
         - Docker
         - Puppet
         - Kafka
+        - Linux
     - level: Novice
       list:
         - Kubernetes
